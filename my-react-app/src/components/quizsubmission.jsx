@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import '../css/quizzesComponent.css';
 import MiniLeaderboard from '../components/MiniLeaderboard';
+import UsernameForm from './UsernameForm';
+import QuizQuestion from './QuizQuestion';
+import QuizResults from './QuizResults';
+import DetailedResults from './DetailedResults';
 
 const QuizSubmission = () => {
   const [answers, setAnswers] = useState([]);
@@ -52,8 +56,7 @@ const QuizSubmission = () => {
     5: "Christopher Nolan",
   };
 
-  const handleAnswerChange = (e) => {
-    const selectedOption = e.target.value;
+  const handleAnswerChange = (selectedOption) => {
     const updatedAnswers = [...answers];
     updatedAnswers[currentQuestionIndex] = {
       questionId: questions[currentQuestionIndex].id,
@@ -74,9 +77,7 @@ const QuizSubmission = () => {
     setIsComplete(true);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prev) => prev + 1);
     } else {
@@ -89,98 +90,35 @@ const QuizSubmission = () => {
   return (
     <div className="quiz-container">
       {!quizStarted ? (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (username.trim()) {
-              setUsername(username.trim());
-              setQuizStarted(true);
-            }
-          }}
-        >
-          <h3 className="quiz-title">Enter Your Username</h3>
-          <div className="center-quiz-username">
-            <input
-              type="text"
-              className="username-input"
-              placeholder="Enter your username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-            <button
-              type="submit"
-              className="quiz-submit-button"
-              disabled={!username.trim()}
-            >
-              Start Quiz
-            </button>
-          </div>
-        </form>
+        <UsernameForm
+          username={username}
+          setUsername={setUsername}
+          setQuizStarted={setQuizStarted}
+        />
       ) : !isComplete ? (
-        <form onSubmit={handleSubmit}>
-          <h3 className="quiz-title">General Knowledge Quiz</h3>
-          <div>
-            <p className="quiz-category">Category: {currentQuestion.category}</p>
-            <p className="quiz-question">
-              Question {currentQuestionIndex + 1} of {questions.length}
-            </p>
-            <p className="quiz-question">{currentQuestion.question}</p>
-            <div className="quiz-options">
-              {currentQuestion.options.map((option, index) => (
-                <label key={index} className="quiz-option">
-                  <input
-                    type="radio"
-                    name={`question-${currentQuestion.id}`}
-                    value={option}
-                    checked={
-                      answers[currentQuestionIndex]?.selectedAnswer === option
-                    }
-                    onChange={handleAnswerChange}
-                    required
-                  />
-                  {option}
-                </label>
-              ))}
-            </div>
-            <button type="submit" className="quiz-submit-button">
-              {currentQuestionIndex === questions.length - 1 ? "Finish" : "Next"}
-            </button>
-          </div>
-        </form>
+        <QuizQuestion
+          currentQuestion={currentQuestion}
+          currentQuestionIndex={currentQuestionIndex}
+          questionsLength={questions.length}
+          answers={answers}
+          handleAnswerChange={handleAnswerChange}
+          handleSubmit={handleSubmit}
+        />
       ) : !showResults ? (
-        <div className="quiz-results">
-          <h2>Quiz Complete!</h2>
-          <p>Your score: {score}</p>
-          <p>
-            You got {answers.filter((answer) => correctAnswers[answer.questionId] === answer.selectedAnswer).length} out of {questions.length} correct
-          </p>
-          <button onClick={() => setShowResults(true)} className="quiz-submit-button">
-            See Results
-          </button>
-          <div className="leaderboard-quiz-results">
-            <MiniLeaderboard />
-          </div>
-        </div>
+        <QuizResults
+          score={score}
+          answers={answers}
+          questions={questions}
+          correctAnswers={correctAnswers}
+          setShowResults={setShowResults}
+        />
       ) : (
-        <div className="quiz-detailed-results">
-          <h2>Detailed Results</h2>
-          <p>Your score: {score}</p>
-          {questions.map((q) => {
-            const userAnswer = answers.find((a) => a.questionId === q.id)?.selectedAnswer;
-            const isCorrect = correctAnswers[q.id] === userAnswer;
-            return (
-              <div key={q.id}>
-                <h3>{q.question}</h3>
-                <p>Category: {q.category}</p>
-                <p>Your answer: {userAnswer || "No answer provided"}</p>
-                <p>Correct answer: {correctAnswers[q.id]}</p>
-                <p>{isCorrect ? "✓ Correct" : "✗ Incorrect"}</p>
-                <hr />
-              </div>
-            );
-          })}
-        </div>
+        <DetailedResults
+          score={score}
+          answers={answers}
+          questions={questions}
+          correctAnswers={correctAnswers}
+        />
       )}
     </div>
   );
