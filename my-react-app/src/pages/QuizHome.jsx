@@ -8,9 +8,9 @@ function QuizHome() {
   return (
 
       <div className="home-container">
-<div class="row">
-  <div class="leftcolumn">
-    <div class="card">
+<div className="row">
+  <div className="leftcolumn">
+    <div className="card">
       
       
       <h2>General Knowledge Quiz</h2>
@@ -21,17 +21,17 @@ function QuizHome() {
       </div>
 
   </div>
-  <div class="rightcolumn">
-    <div class="card">
+  <div className="rightcolumn">
+    <div className="card">
       <MiniLeaderboard/>
       
      
     </div>
 
-    <div class="card">
+    <div className="card">
       <h3>Submit Questions</h3>
       <p>Help supply TriviaSync with quiz questions</p>
-      <div class='fakeimg'>Link</div>
+      <div className='fakeimg'>Link</div>
     </div>
   </div>
 </div>

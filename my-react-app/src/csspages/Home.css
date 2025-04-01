@@ -7,37 +7,6 @@ text-align: center;
 align-items: center;
 justify-content: center;
 }
-/* 
-.hero {
-  
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hero h1 {
-  font-size: 48px;
-  color: #d81b60;
-  margin-bottom: 30px;
-}
-
-.leaderboard-hero {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-@media (max-width: 600px) {
-  .hero {
-    padding: 20px;
-  }
-
-  .hero h1 {
-    font-size: 36px;
-  }
-} */
 
 
 /* Create two unequal columns that floats next to each other */

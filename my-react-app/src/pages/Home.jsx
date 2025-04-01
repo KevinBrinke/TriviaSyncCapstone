@@ -6,9 +6,9 @@ import '../csspages/Home.css';
 function Home() {
   return (
     <div className="home-container">
-<div class="row">
-  <div class="leftcolumn">
-    <div class="card">
+<div className="row">
+  <div className="leftcolumn">
+    <div className="card">
       <h2>Welcome To TriviaSync</h2>
       <h5></h5>
       <p>Some text..</p>
@@ -16,17 +16,17 @@ function Home() {
     </div>
 
   </div>
-  <div class="rightcolumn">
-    <div class="card">
+  <div className="rightcolumn">
+    <div className="card">
       <MiniLeaderboard/>
       
      
     </div>
 
-    <div class="card">
+    <div className="card">
       <h3>Submit Questions</h3>
       <p>Help supply TriviaSync with quiz questions</p>
-      <div class='fakeimg'>Link</div>
+      <div className='fakeimg'>Link</div>
     </div>
   </div>
 </div>
