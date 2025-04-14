@@ -1,0 +1,9 @@
+.about {
+    width: 70%;
+    margin: 1vh auto;
+
+    gap: 15vh;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10vh;
+}

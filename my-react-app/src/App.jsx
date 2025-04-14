@@ -21,7 +21,7 @@ function App() {
 
     <div className="app-container">
       <NavBar className="navbar" />
-      <div className="background-container">
+      <div class="background-container">
         <div className='main-content'>
         <Routes>
           <Route path="/" element={<Home />} />

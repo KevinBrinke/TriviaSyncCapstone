@@ -1,4 +1,3 @@
-
 @font-face {
   font-family: 'Namaku';
   src: url('../fonts/Namaku.ttf') format('truetype');
@@ -18,20 +17,18 @@
 
 .navbar {
   display: grid;
-  grid-template-columns: repeat(8,1fr);
+  grid-template-columns: repeat(8, 1fr);
   grid-template-rows: 1fr;
-
   align-items: end;
-  background: linear-gradient(45deg, #FF0000, #FFA500, #FFFF00, #008000,teal, #0000FF, #4B0082, #EE82EE);
-  border-bottom: #000000 .15vw solid;
-  box-shadow: 0 .2vw .4vw rgba(0, 0, 100, 0.7);
+  background: linear-gradient(45deg, #FF0000, #FFA500, #FFFF00, #008000, teal, #0000FF, #4B0082, #EE82EE);
+  border-bottom: #000000 0.15vw solid;
+  box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 100, 0.7);
   padding: 0;
-  padding-bottom: 0px;
   margin-bottom: 0px;
   font-family: 'Namaku';
   gap: 0;
   height: 8.5vw;
-
+  position: relative; /* Ensure child elements are positioned relative to this container */
 }
 
 .navbar-logo {
@@ -45,16 +42,13 @@
 .navbar-logo img {
   height: 100%;
   width: auto;
-  
-  
-   
 }
 
 .navbar-image {
   grid-column: 6/span 2;
 
   height: 8vw;
-  border: 2px,0px,0px,2px solid black
+  /* border: 2px,0px,0px,2px solid black */
 }
 .navbar-image img {
   height: 100%;
@@ -82,13 +76,29 @@
 }
 
 .navbar-links {
-  grid-column: 2/ span 4;
-  grid-row:1 ;
+  grid-column: 2 / span 4;
+  grid-row: 1;
   display: flex;
-  justify-content:end;
-  gap: 0; /* Remove gap between links */
+  gap: 0;
   object-fit: contain;
-  border-right: .3vw solid black;
+  z-index: 2; /* Ensure links are above the box */
+}
+
+.navbar-box {
+  grid-column: 2 / span 4; /* Align with the navbar links */
+  grid-row: 1; /* Place in the same row as the links */
+  z-index: 1; /* Lower z-index to place it behind the links */
+  position: absolute; /* Position it behind the links */
+  width: 100%; /* Span the full width of the column */
+  height: 100%; /* Span the full height of the navbar */
+  border-bottom: #000000 1.4vw solid;
+}
+
+.navarbar-extendskyline{
+  grid-column: 2/span 4;
+  grid-row: 1;
+  position: absolute;
+  border-bottom: 1.4vw black solid;
 }
 
 .nav-link {
@@ -100,6 +110,7 @@
   transition: background-color 0.2s, transform 0.2s; /* Add transition for transform */
   text-decoration: none;
   border-left: .25vw solid black;
+  border-right: .25vw solid black;
   border-top: .3vw solid black; /* Add black border */
   border-bottom: .15vw solid black;
 }
@@ -138,34 +149,5 @@
 }
 
 .nav-link:nth-child(7) {
-  background-color: #EE82EE;
-}
-
-/* Cycle through the colors if more than 7 links are added */
-.nav-link:nth-child(8) {
-  background-color: #FF0000;
-}
-
-.nav-link:nth-child(9) {
-  background-color: #FFA500;
-}
-
-.nav-link:nth-child(10) {
-  background-color: #FFFF00;
-}
-
-.nav-link:nth-child(11) {
-  background-color: #008000;
-}
-
-.nav-link:nth-child(12) {
-  background-color: teal;
-}
-
-.nav-link:nth-child(13) {
-  background-color: #4B0082;
-}
-
-.nav-link:nth-child(14) {
   background-color: #EE82EE;
 }

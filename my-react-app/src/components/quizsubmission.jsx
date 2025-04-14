@@ -4,6 +4,7 @@ import UsernameForm from './UsernameForm';
 import QuizQuestion from './QuizQuestion';
 import QuizResults from './QuizResults';
 import DetailedResults from './DetailedResults';
+import Timer from './Timer';
 
 const QuizSubmission = () => {
   const [questions, setQuestions] = useState([]);
@@ -12,6 +13,7 @@ const QuizSubmission = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [score, setScore] = useState(null);
+  const [correctAnswers, setCorrectAnswers] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [username, setUsername] = useState('');
   const [quizStarted, setQuizStarted] = useState(false);
@@ -41,7 +43,7 @@ const QuizSubmission = () => {
   const handleAnswerChange = (selectedOption) => {
     const updatedAnswers = [...answers];
     updatedAnswers[currentQuestionIndex] = {
-      questionId: questions[currentQuestionIndex].id,
+      questionId: currentQuestionIndex,
       selectedAnswer: selectedOption,
     };
     setAnswers(updatedAnswers);
@@ -53,7 +55,7 @@ const QuizSubmission = () => {
       const response = await fetch('/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: { username ,answers, sessionId},
+        body: JSON.stringify({name: username, submissions: answers, sessionId: sessionId}),
       });
 
       if (!response.ok) {
@@ -61,8 +63,8 @@ const QuizSubmission = () => {
       }
 
       const data = await response.json();
-      console.log('Server response:', data);
       setScore(data.score); // Assuming the server returns { score: 0.8 }
+      setCorrectAnswers(data.answers)
       setIsComplete(true);
     } catch (error) {
       console.error('Error submitting quiz:', error);
@@ -90,6 +92,8 @@ const QuizSubmission = () => {
       ) : questions.length === 0 ? (
         <p>Loading questions...</p>
       ) : !isComplete ? (
+      <>
+        <Timer isRunning={quizStarted && !isComplete} />
         <QuizQuestion
           currentQuestion={currentQuestion}
           currentQuestionIndex={currentQuestionIndex}
@@ -98,11 +102,12 @@ const QuizSubmission = () => {
           handleAnswerChange={handleAnswerChange}
           handleSubmit={handleSubmit}
         />
-      ) : !showResults ? (
+      </>) : !showResults ? (
         <QuizResults
           score={score}
           answers={answers}
           questions={questions}
+          correctAnswers={correctAnswers}
           setShowResults={setShowResults}
         />
       ) : (
@@ -110,6 +115,7 @@ const QuizSubmission = () => {
           score={score}
           answers={answers}
           questions={questions}
+          correctAnswers={correctAnswers}
         />
       )}
     </div>
